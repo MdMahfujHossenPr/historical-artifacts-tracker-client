@@ -143,7 +143,7 @@ const ArtifactDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-4">
-      <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+      <div className="bg-rose-100 border-8 border-white shadow-lg rounded-xl overflow-hidden">
         <img
           src={artifact.image}
           alt={artifact.name}
@@ -151,30 +151,30 @@ const ArtifactDetails = () => {
         />
         <div className="p-6">
           <h2 className="text-3xl font-bold mb-2">{artifact.name}</h2>
-          <p className="text-rose-600 mb-2">
+          <p className="text-black mb-2">
             <span className="font-semibold">Type:</span> {artifact.type}
           </p>
-          <p className="text-rose-600 mb-2">
+          <p className="text-black mb-2">
             <span className="font-semibold">Historical Context:</span>{" "}
             {artifact.historicalContext}
           </p>
-          <p className="text-rose-600 mb-2">
+          <p className="text-black mb-2">
             <span className="font-semibold">Created At:</span>{" "}
             {new Date(artifact.createdAt).toLocaleDateString()}
           </p>
-          <p className="text-rose-600 mb-2">
+          <p className="text-black mb-2">
             <span className="font-semibold">Discovered At:</span>{" "}
             {artifact.discoveredAt}
           </p>
-          <p className="text-rose-600 mb-2">
+          <p className="text-black mb-2">
             <span className="font-semibold">Discovered By:</span>{" "}
             {artifact.discoveredBy}
           </p>
-          <p className="text-rose-600 mb-2">
+          <p className="text-black mb-2">
             <span className="font-semibold">Present Location:</span>{" "}
             {artifact.presentLocation}
           </p>
-          <p className="text-rose-600 mb-4">
+          <p className="text-black mb-4">
             <span className="font-semibold">Short Description:</span>{" "}
             {artifact.description}
           </p>
@@ -183,14 +183,14 @@ const ArtifactDetails = () => {
             <button
               onClick={handleLike}
               disabled={isLiking}
-              className={`px-4 py-2 rounded-full text-white ${
+              className={`px-4 py-2 rounded-full text-white border-4 border-white ${
                 isLiked ? "bg-red-500" : "bg-rose-500"
               } hover:opacity-80 transition`}
             >
               {isLiked ? "❤️ Liked" : "🤍 Like"}
             </button>
             <p className="text-rose-700 font-semibold">
-              Total Likes: {likeCount}
+              Total Likes:<span className="text-green-400 ml-2">{likeCount}</span>
             </p>
           </div>
         </div>

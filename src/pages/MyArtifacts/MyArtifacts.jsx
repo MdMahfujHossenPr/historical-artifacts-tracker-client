@@ -126,7 +126,7 @@ const MyArtifacts = () => {
           {artifacts.map((artifact) => (
             <div
               key={artifact._id}
-              className="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition"
+              className="bg-rose-100 border-8 border-white shadow rounded-lg overflow-hidden hover:shadow-lg transition"
             >
               <img
                 src={artifact.image}
@@ -161,13 +161,13 @@ const MyArtifacts = () => {
                 <div className="flex justify-end gap-2 mt-4">
                   <button
                     onClick={() => handleEditClick(artifact)}
-                    className="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded flex items-center gap-1 text-sm"
+                    className="bg-rose-500 hover:bg-rose-600 border-2 border-white text-white px-3 py-1 rounded flex items-center gap-1 text-sm"
                   >
                     <FaEdit /> Update
                   </button>
                   <button
                     onClick={() => handleDelete(artifact._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1 text-sm"
+                    className="bg-red-500 hover:bg-red-600 border-2 border-white text-white px-3 py-1 rounded flex items-center gap-1 text-sm"
                   >
                     <FaTrash /> Delete
                   </button>
