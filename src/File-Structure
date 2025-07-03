@@ -1,0 +1,82 @@
+historical-artifacts-tracker-client/
+│
+├── public/
+│   └── index.html
+│
+├── src/
+│   ├── assets/                         # চিত্র, ব্যানার ইমেজ, আইকন ইত্যাদি
+│   │   └── banner1.jpg
+│   │   └── logo.png
+│
+│   ├── components/                    # Reusable ছোট components
+│   │   ├── Navbar/                    # Navbar component
+│   │   │   └── Navbar.jsx
+│   │   ├── Footer/                    # Footer component
+│   │   │   └── Footer.jsx
+│   │   ├── ArtifactCard/             # Single Artifact Card
+│   │   │   └── ArtifactCard.jsx
+│   │   ├── Spinner/                  # Loading Spinner
+│   │   │   └── Spinner.jsx
+│   │   ├── PrivateRoute/             # Protected Route component
+│   │   │   └── PrivateRoute.jsx
+│   │   └── SectionTitle/             # Reusable section title design
+│   │       └── SectionTitle.jsx
+│
+│   ├── layout/                        # Main layout with navbar, footer
+│   │   └── MainLayout.jsx
+│
+│   ├── pages/                         # Route-based main pages
+│   │   ├── Home/
+│   │   │   ├── Home.jsx
+│   │   │   └── Banner.jsx            # Slider/banner part
+│   │   │   └── FeaturedArtifacts.jsx
+│   │   │   └── ExtraSection1.jsx
+│   │   │   └── ExtraSection2.jsx
+│   │   │   └── AnimatedSection.jsx   # Framer motion section
+│   │   ├── Login/
+│   │   │   └── Login.jsx
+│   │   ├── Register/
+│   │   │   └── Register.jsx
+│   │   ├── AddArtifact/
+│   │   │   └── AddArtifact.jsx
+│   │   ├── AllArtifacts/
+│   │   │   └── AllArtifacts.jsx
+│   │   ├── ArtifactDetails/
+│   │   │   └── ArtifactDetails.jsx
+│   │   ├── MyArtifacts/
+│   │   │   └── MyArtifacts.jsx
+│   │   ├── LikedArtifacts/
+│   │   │   └── LikedArtifacts.jsx
+│   │   ├── UpdateArtifact/
+│   │   │   └── UpdateArtifact.jsx
+│   │   ├── NotFound/
+│   │   │   └── NotFound.jsx
+│
+│   ├── routes/                        # All route definitions
+│   │   └── Routes.jsx
+│
+│   ├── contexts/                      # Context providers (like Auth)
+│   │   └── AuthContext.jsx
+│
+│   ├── hooks/                         # Custom hooks
+│   │   └── useTitle.js               # Dynamic document title hook
+│   │   └── useAuth.js                # Optional: Auth helper
+│
+│   ├── utils/                         # Utility functions
+│   │   └── token.js                  # JWT token save/retrieve
+│   │   └── validatePassword.js      # Password validator
+│
+│   ├── App.jsx                        # Main app entry
+│   ├── main.jsx                       # Root render
+│   └── index.css                      # Tailwind base styles
+│
+├── .env.local                           # Environment variables
+├── .gitignore
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── README.md
+
+
+
+
