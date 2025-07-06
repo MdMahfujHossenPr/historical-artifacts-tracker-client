@@ -19,11 +19,14 @@ const AllArtifacts = () => {
       setLoading(true);
       try {
         const token = await getToken();
-        const res = await fetch("http://localhost:5000/artifacts", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (!res.ok) throw new Error("Failed to fetch artifacts");
         const data = await res.json();
         setArtifacts(data || []);
@@ -70,7 +73,7 @@ const AllArtifacts = () => {
 
   return (
     <section className="px-4 py-16 max-w-screen-xl mx-auto">
-      <title>all-artifacts</title>
+      <title>All Artifacts</title>
       <motion.div
         className="flex justify-between items-center mb-10"
         initial={{ opacity: 0 }}
@@ -135,7 +138,8 @@ const AllArtifacts = () => {
                         : "text-rose-600"
                     }`}
                     style={{
-                      pointerEvents: likingId === artifact._id ? "none" : "auto",
+                      pointerEvents:
+                        likingId === artifact._id ? "none" : "auto",
                     }}
                   />
                   <span

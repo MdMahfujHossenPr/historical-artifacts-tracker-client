@@ -58,7 +58,7 @@ const Feedback = () => {
 
   return (
     <section className="max-w-3xl mt-16 mx-auto bg-rose-100 bg-opacity-90 text-black p-10 rounded-3xl shadow-2xl border-8 border-white">
-      <title>feedback</title>
+      <title>Feedback</title>
       <h2 className="text-4xl text-gray-600 font-extrabold mb-8 text-center tracking-wide">
         Your Feedback Matters
       </h2>

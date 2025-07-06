@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const ErrorPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-sky-100 via-white to-indigo-100 px-4 py-10">
-      <title>error</title>
+      <title>Error</title>
       <motion.img
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}

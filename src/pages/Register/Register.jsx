@@ -28,20 +28,23 @@ const Register = () => {
 
   const sendUserToBackend = async (user, method, password = "") => {
     try {
-      const res = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: user.displayName || formData.name,
-          email: user.email,
-          photoURL:
-            user.photoURL ||
-            formData.photoURL ||
-            "https://i.ibb.co/2kRZ1Z5/default-avatar.png",
-          password: method === "manual" ? password : undefined,
-          method,
-        }),
-      });
+      const res = await fetch(
+        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/api/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: user.displayName || formData.name,
+            email: user.email,
+            photoURL:
+              user.photoURL ||
+              formData.photoURL ||
+              "https://i.ibb.co/2kRZ1Z5/default-avatar.png",
+            password: method === "manual" ? password : undefined,
+            method,
+          }),
+        }
+      );
       const data = await res.json();
 
       if (!res.ok) {
@@ -131,9 +134,11 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-rose-100 px-4">
-      <title>register</title>
+      <title>Register</title>
       <div className="bg-rose-500 p-8 rounded-lg shadow-lg w-full max-w-sm border-8 border-white">
-        <h2 className="text-3xl font-bold text-white mb-6 text-center">Register</h2>
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">
+          Register
+        </h2>
 
         {errors.form && (
           <div className="text-rose-200 text-sm mb-4 bg-rose-700 p-2 rounded">

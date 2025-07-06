@@ -112,7 +112,7 @@ const AddArtifact = () => {
       }
 
       const response = await axios.post(
-        `http://localhost:5000/artifacts`,
+        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts`,
         artifactData,
         {
           headers: {
@@ -155,29 +155,30 @@ const AddArtifact = () => {
     }
   };
 
-const getInputClass = (fieldName) =>
-  `input input-bordered w-full bg-rose-400 text-white border-4 border-white ${
-    validationErrors[fieldName] ? "input-error" : ""
-  }`;
+  const getInputClass = (fieldName) =>
+    `input input-bordered w-full bg-rose-400 text-white border-4 border-white ${
+      validationErrors[fieldName] ? "input-error" : ""
+    }`;
 
-const getTextareaClass = (fieldName) =>
-  `textarea textarea-bordered w-full bg-rose-400 text-white border-4 border-white ${
-    validationErrors[fieldName] ? "textarea-error" : ""
-  }`;
+  const getTextareaClass = (fieldName) =>
+    `textarea textarea-bordered w-full bg-rose-400 text-white border-4 border-white ${
+      validationErrors[fieldName] ? "textarea-error" : ""
+    }`;
 
-const getSelectClass = (fieldName) =>
-  `select select-bordered w-full bg-rose-400 text-white border-4 border-white ${
-    validationErrors[fieldName] ? "select-error" : ""
-  }`;
-
+  const getSelectClass = (fieldName) =>
+    `select select-bordered w-full bg-rose-400 text-white border-4 border-white ${
+      validationErrors[fieldName] ? "select-error" : ""
+    }`;
 
   const ErrorMessage = ({ message }) =>
     message ? <p className="text-rose-500 text-sm mt-1">{message}</p> : null;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <title>add-artifact</title>
-      <h2 className="text-3xl font-bold mb-6 text-rose-700 text-center">Add New Artifact</h2>
+      <title>Add Artifact</title>
+      <h2 className="text-3xl font-bold mb-6 text-rose-700 text-center">
+        Add New Artifact
+      </h2>
       <form
         onSubmit={handleSubmit}
         className="space-y-6 bg-rose-500 text-white border-8 border-white p-6 rounded-lg shadow-md"
@@ -386,7 +387,9 @@ const getSelectClass = (fieldName) =>
           <button
             type="submit"
             disabled={loading}
-            className={`btn btn-primary bg-rose-500 border-2 border-white px-10 ${loading ? "loading" : ""}`}
+            className={`btn btn-primary bg-rose-500 border-2 border-white px-10 ${
+              loading ? "loading" : ""
+            }`}
           >
             {loading ? "Adding..." : "Add Artifact"}
           </button>

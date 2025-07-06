@@ -42,9 +42,12 @@ const ArtifactDetails = () => {
         }
         const token = await currentUser.getIdToken();
 
-        const res = await axios.get(`http://localhost:5000/artifacts/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         setArtifact(res.data);
         setLikeCount(res.data.likes || 0);
@@ -72,9 +75,12 @@ const ArtifactDetails = () => {
         }
         const token = await currentUser.getIdToken();
 
-        const res = await axios.get("http://localhost:5000/liked", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/liked",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         const liked = res.data.some((item) => item._id === id);
         setIsLiked(liked);
@@ -101,7 +107,7 @@ const ArtifactDetails = () => {
       const token = await currentUser.getIdToken();
 
       const response = await axios.post(
-        `http://localhost:5000/like/${id}`,
+        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${id}`,
         null,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -143,7 +149,7 @@ const ArtifactDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-4">
-      <title>artifact-details</title>
+      <title>Artifact Details</title>
       <div className="bg-rose-100 border-8 border-white shadow-lg rounded-xl overflow-hidden">
         <img
           src={artifact.image}
@@ -191,7 +197,8 @@ const ArtifactDetails = () => {
               {isLiked ? "❤️ Liked" : "🤍 Like"}
             </button>
             <p className="text-rose-700 font-semibold">
-              Total Likes:<span className="text-green-400 ml-2">{likeCount}</span>
+              Total Likes:
+              <span className="text-green-400 ml-2">{likeCount}</span>
             </p>
           </div>
         </div>

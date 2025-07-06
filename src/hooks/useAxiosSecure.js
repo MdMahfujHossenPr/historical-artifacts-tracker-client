@@ -1,18 +1,18 @@
 import axios from "axios";
 
-import { getToken } from '../utils/token'; // আপনার token.js ফাইলের সঠিক পাথ দিন
+import { getToken } from "../utils/token"; // আপনার token.js ফাইলের সঠিক পাথ দিন
 
 const useAxiosSecure = () => {
   const instance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app",
   });
 
   // Request interceptor to add authorization token
   instance.interceptors.request.use(
     (config) => {
       // token.js থেকে getToken() ফাংশন ব্যবহার করে টোকেন আনুন
-      const token = getToken(); 
-      
+      const token = getToken();
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -35,7 +35,7 @@ const useAxiosSecure = () => {
   //       console.error('Unauthorized or Forbidden access. Logging out...');
   //       removeToken(); // token.js থেকে removeToken() ব্যবহার করুন
   //       // Redirect to login page or show a message
-  //       // window.location.href = '/login'; 
+  //       // window.location.href = '/login';
   //     }
   //     return Promise.reject(error);
   //   }

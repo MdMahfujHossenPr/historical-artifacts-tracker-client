@@ -4,7 +4,6 @@ import { LikeContext } from "../../context/LikeContext";
 import { useNavigate } from "react-router-dom";
 import { FaThumbsDown } from "react-icons/fa";
 
-
 const LikedArtifacts = () => {
   const [likedArtifacts, setLikedArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,11 +21,14 @@ const LikedArtifacts = () => {
         const token = await getToken();
         if (!token) throw new Error("User not authenticated");
 
-        const res = await fetch("http://localhost:5000/liked", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/liked",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) throw new Error("Failed to fetch liked artifacts");
 
@@ -70,7 +72,7 @@ const LikedArtifacts = () => {
 
   return (
     <section className="px-4 py-10 max-w-7xl mx-auto">
-      <title>liked-artifacts</title>
+      <title>Liked Artifacts</title>
       <h1 className="text-3xl font-bold text-center mb-8 text-rose-800">
         ❤️ Liked Artifacts
       </h1>

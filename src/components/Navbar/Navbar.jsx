@@ -49,12 +49,14 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-3xl font-extrabold text-white hover:text-rose-300 transition-shadow duration-300"
+          className="flex items-center gap-2 text-2xl font-extrabold text-white"
         >
-          ArtifactCard{" "}
-          <span role="img" aria-label="bowl">
-            🍲
-          </span>
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-10 h-10 rounded-full border-2 border-white bg-black object-contain"
+          />
+          <span>ArtifactCard</span>
         </Link>
 
         {/* Desktop nav */}
@@ -64,7 +66,7 @@ const Navbar = () => {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `hover:text-rose-300 transition px-3 py-2 rounded-lg ${
+                `hover:text-rose-900 transition px-3 py-2 rounded-lg ${
                   isActive
                     ? "text-rose-400 font-semibold bg-white/10 shadow-md"
                     : "text-white"

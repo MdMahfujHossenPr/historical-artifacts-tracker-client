@@ -21,11 +21,14 @@ export const LikeProvider = ({ children }) => {
         const token = await getToken();
         if (!token) return;
 
-        const res = await fetch("http://localhost:5000/liked", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/liked",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) throw new Error("Failed to fetch liked artifacts");
 
@@ -53,13 +56,16 @@ export const LikeProvider = ({ children }) => {
       const token = await getToken();
       if (!token) return false;
 
-      const res = await fetch(`http://localhost:5000/like/${artifactId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${artifactId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const result = await res.json();
 

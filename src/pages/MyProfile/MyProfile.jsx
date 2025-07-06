@@ -18,7 +18,7 @@ const MyProfile = () => {
 
   return (
     <div className="bg-rose-100 py-6 px-4 my-10 flex justify-center items-center">
-      <title>my-profile</title>
+      <title>My Profile</title>
       <div className="max-w-4xl mx-auto p-8 bg-rose-400 border-4 border-white rounded-3xl shadow-xl">
         <div className="flex flex-col items-center gap-10">
           {/* Profile Image with Edit Icon */}

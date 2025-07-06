@@ -24,11 +24,14 @@ const MyArtifacts = () => {
           return;
         }
         const token = await auth.currentUser.getIdToken();
-        const res = await axios.get(`http://localhost:5000/my-artifacts`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(
+          `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/my-artifacts`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setArtifacts(res.data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
@@ -54,11 +57,14 @@ const MyArtifacts = () => {
     if (result.isConfirmed) {
       try {
         const token = await auth.currentUser.getIdToken();
-        await axios.delete(`http://localhost:5000/artifacts/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await axios.delete(
+          `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setArtifacts((prev) => prev.filter((item) => item._id !== id));
         Swal.fire("Deleted!", "Artifact has been deleted.", "success");
       } catch (error) {
@@ -80,11 +86,15 @@ const MyArtifacts = () => {
 
     try {
       const token = await auth.currentUser.getIdToken();
-      await axios.put(`http://localhost:5000/artifacts/${_id}`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.put(
+        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/${_id}`,
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setArtifacts((prev) =>
         prev.map((item) =>
@@ -112,7 +122,7 @@ const MyArtifacts = () => {
 
   return (
     <div className="p-6">
-      <title>my-artifacts</title>
+      <title>My Artifacts</title>
       <h1 className="text-3xl font-bold mb-6 text-center">My Artifacts</h1>
 
       {artifacts.length === 0 ? (

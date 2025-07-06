@@ -33,9 +33,13 @@ const ArtifactCard = ({ artifact }) => {
     setIsLiking(true);
 
     try {
-      const res = await axios.post(`http://localhost:5000/like/${_id}`, null, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.post(
+        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${_id}`,
+        null,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       const liked = res.data.liked;
       if (typeof liked === "boolean") {

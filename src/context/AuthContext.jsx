@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -16,71 +11,61 @@ import { auth, googleProvider } from "../firebase/firebase.config";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Create and export the Auth Context
 export const AuthContext = createContext();
-
-// Custom hook for easy access to AuthContext
 export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider component to wrap the app with authentication logic
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Stores authenticated user
-  const [loading, setLoading] = useState(true); // Tracks loading state
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Format Firebase user object to custom shape
+  const DEFAULT_PROFILE_PIC =
+    "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
   const formatUser = (user) => ({
     uid: user.uid,
     email: user.email,
     name: user.displayName || "User Name",
     profilePicture:
-      user.photoURL || "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      user.photoURL && user.photoURL !== "" ? user.photoURL : DEFAULT_PROFILE_PIC,
   });
 
-  // Sync auth state and localStorage
   useEffect(() => {
     const syncUser = () => {
       const localUser = localStorage.getItem("user");
-      setUser(localUser ? JSON.parse(localUser) : null);
+      if (localUser) setUser(JSON.parse(localUser));
+      else setUser(null);
     };
 
-    // Load user from localStorage on mount
-    const localUser = localStorage.getItem("user");
-    if (localUser) {
-      setUser(JSON.parse(localUser));
-    }
+    window.addEventListener("storage", syncUser);
 
-    // Listen for changes in auth state
+    const localUser = localStorage.getItem("user");
+    if (localUser) setUser(JSON.parse(localUser));
+
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         const formatted = formatUser(currentUser);
         setUser(formatted);
-        localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("user", JSON.stringify(formatted));
+        localStorage.setItem("isLoggedIn", "true");
       } else {
         setUser(null);
-        localStorage.setItem("isLoggedIn", "false");
         localStorage.removeItem("user");
+        localStorage.setItem("isLoggedIn", "false");
       }
       setLoading(false);
     });
 
-    // Listen to localStorage changes (for multi-tab sync)
-    window.addEventListener("storage", syncUser);
-
-    // Cleanup listeners on unmount
     return () => {
       unsubscribe();
       window.removeEventListener("storage", syncUser);
     };
   }, []);
 
-  // Get Firebase ID token of the current user
   const getToken = async () => {
-    const currentUser = auth.currentUser;
-    return currentUser ? await currentUser.getIdToken() : null;
+    if (!auth.currentUser) return null;
+    return await auth.currentUser.getIdToken();
   };
 
-  // Log in using email and password
   const login = async (email, password) => {
     if (!email || !password) {
       toast.error("❌ Please provide email and password");
@@ -100,7 +85,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Sign up new user with email and password, and optionally set profile
   const signup = async (email, password, name = null, photoURL = null) => {
     if (!email || !password) {
       toast.error("❌ Please provide email and password");
@@ -111,13 +95,13 @@ export const AuthProvider = ({ children }) => {
 
       if (name || photoURL) {
         await updateProfile(res.user, {
-          displayName: name || "",
-          photoURL: photoURL || "",
+          ...(name ? { displayName: name } : {}),
+          ...(photoURL ? { photoURL } : {}),
         });
-        await auth.currentUser.reload();
+        await res.user.reload();
       }
 
-      const formatted = formatUser(auth.currentUser);
+      const formatted = formatUser(res.user);
       setUser(formatted);
       localStorage.setItem("user", JSON.stringify(formatted));
       localStorage.setItem("isLoggedIn", "true");
@@ -129,7 +113,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Sign in with Google popup
   const googleLogin = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
@@ -145,20 +128,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Log out the current user
   const logout = async () => {
     try {
       await signOut(auth);
       setUser(null);
-      localStorage.setItem("isLoggedIn", "false");
       localStorage.removeItem("user");
+      localStorage.setItem("isLoggedIn", "false");
       toast.info("👋 Logged out!");
     } catch (err) {
       toast.error("❌ Logout failed!");
+      throw err;
     }
   };
 
-  // Update the current user's profile info (name and photo)
   const updateUserProfile = async ({ name, photoURL }) => {
     if (!auth.currentUser) {
       toast.error("❌ User not logged in");
@@ -166,8 +148,8 @@ export const AuthProvider = ({ children }) => {
     }
     try {
       await updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: photoURL,
+        ...(name ? { displayName: name } : {}),
+        ...(photoURL ? { photoURL } : {}),
       });
       await auth.currentUser.reload();
       const formatted = formatUser(auth.currentUser);
@@ -180,7 +162,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Provide auth-related data and methods to the app
   return (
     <AuthContext.Provider
       value={{

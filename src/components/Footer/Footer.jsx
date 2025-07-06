@@ -40,7 +40,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/artifacts"
+                to="/all-artifacts"
                 className="hover:text-rose-500 transition-colors duration-300"
               >
                 All Artifacts

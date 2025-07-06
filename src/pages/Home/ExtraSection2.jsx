@@ -1,75 +1,106 @@
-import React from "react";
-import SectionTitle from "../../components/SectionTitle/SectionTitle";
-import { FaUsers, FaAward, FaLightbulb } from "react-icons/fa";
-import { motion } from "framer-motion";
+// src/components/ExtraSection2.jsx
 
-const values = [
+import React from "react";
+
+const artifactHighlights = [
   {
-    icon: <FaUsers size={26} />,
-    title: "Build Legacy",
+    id: 1,
+    name: "Rosetta Stone",
+    role: "Ancient Artifact",
     description:
-      "Your artifact contributions will be remembered for generations to come.",
-    color: "from-[#facc15] to-[#fbbf24]",
-    bg: "bg-yellow-400/20",
+      "The Rosetta Stone was key to deciphering Egyptian hieroglyphs, unlocking the secrets of an ancient civilization.",
+    date: "Discovered: 1799",
+    readingTime: "Important Milestone",
+    image:
+      "https://i.ibb.co/ymmKft0h/rosetta-stone.jpg",
   },
   {
-    icon: <FaAward size={26} />,
-    title: "Global Recognition",
+    id: 2,
+    name: "Antikythera Mechanism",
+    role: "Ancient Analog Computer",
     description:
-      "Your name stands beside some of the most historical discoveries in history.",
-    color: "from-[#34d399] to-[#10b981]",
-    bg: "bg-emerald-400/20",
+      "An ancient Greek device used to predict astronomical positions and eclipses, showcasing early scientific ingenuity.",
+    date: "Discovered: 1901",
+    readingTime: "Scientific Marvel",
+    image:
+      "https://i.ibb.co/rKkgYXR8/antikythera.jpg",
   },
   {
-    icon: <FaLightbulb size={26} />,
-    title: "Inspire Others",
+    id: 3,
+    name: "Terracotta Army",
+    role: "Burial Artifacts",
     description:
-      "Encourage students, historians, and curious minds to explore the past.",
-    color: "from-[#fb7185] to-[#f472b6]",
-    bg: "bg-pink-400/20",
+      "Thousands of life-sized sculptures buried with China's first Emperor Qin Shi Huang to protect him in the afterlife.",
+    date: "Discovered: 1974",
+    readingTime: "Cultural Heritage",
+    image:
+      "https://i.ibb.co/rKJKdF2L/terracotta-army.jpg",
   },
 ];
 
-const ExtraSection2 = () => {
+export default function ExtraSection2() {
   return (
-    <section className="py-16 relative overflow-hidden text-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <SectionTitle
-          heading="🌍 Become a History Maker"
-          subheading="Why your contribution matters"
-        />
+    <section className="mt-12 max-w-7xl mx-auto px-4">
+      <h2 className="text-3xl font-bold text-cyan-800 mb-12 text-center">
+        Key Highlights of Historical Artifacts
+      </h2>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          {values.map((val, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-              viewport={{ once: true }}
-              className={`rounded-xl border-2 border-white p-[1px] hover:scale-105 transition-transform duration-300 ${val.bg}`}
-            >
-              <div className="h-full p-6 rounded-xl text-center text-black">
-                <div
-                  className={`mx-auto w-14 h-14 rounded-full bg-gradient-to-br ${val.color} flex items-center justify-center mb-4 text-black shadow-lg`}
-                >
-                  {val.icon}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {artifactHighlights.map(({ id, name, role, description, date, readingTime, image }) => (
+          <article
+            key={id}
+            className="flex flex-col sm:flex-row items-center gap-6 rounded-lg border-4 border-white bg-rose-100 p-6 shadow-lg hover:shadow-xl transition duration-300 text-black"
+          >
+            {/* Image on left */}
+            <div className="flex-shrink-0">
+              <img
+                src={image}
+                alt={name}
+                className="w-24 h-24 rounded-full object-cover border-2 border-cyan-700"
+              />
+            </div>
+
+            {/* Text content on right */}
+            <div className="sm:flex-1">
+              <h3 className="text-xl font-bold mb-1">{name}</h3>
+              <p className="text-cyan-700 font-semibold mb-2">{role}</p>
+              <p className="text-sm mb-4">{description}</p>
+
+              <dl className="flex gap-8 text-xs font-medium text-cyan-900">
+                <div className="flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5h18v11.25M3 18.75h18" />
+                  </svg>
+                  <dd>{date}</dd>
                 </div>
-                <h3 className="text-xl font-bold text-black mb-2">
-                  {val.title}
-                </h3>
-                <p className="text-black">{val.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
 
-      {/* Optional decorative blurred elements */}
-      <div className="absolute -top-10 -left-10 w-48 h-48 rounded-full blur-3xl opacity-20" />
-      <div className="absolute -bottom-10 -right-10 w-72 h-72 rounded-full blur-3xl opacity-20" />
+                <div className="flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 6v12m0-12a9 9 0 1 1-6 2.25M6 3.75V6" />
+                  </svg>
+                  <dd>{readingTime}</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
   );
-};
-
-export default ExtraSection2;
+}

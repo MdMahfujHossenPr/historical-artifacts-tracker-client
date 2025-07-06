@@ -63,7 +63,7 @@ const HelpAndSupport = () => {
 
   return (
     <section className="max-w-4xl mx-auto m-16 p-8 bg-rose-100 rounded-3xl shadow-lg border-2 border-white">
-      <title>help</title>
+      <title>Help</title>
       <h2 className="text-4xl font-extrabold text-rose-700 mb-8 text-center">
         Help & Support
       </h2>

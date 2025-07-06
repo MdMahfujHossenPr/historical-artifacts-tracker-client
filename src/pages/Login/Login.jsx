@@ -46,32 +46,38 @@ const Login = () => {
     }
   };
 
-  // Google Login (As before)
+  // Google Login (as before)
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-          name: user.displayName,
-          photoURL: user.photoURL,
-          method: "google",
-        }),
-      });
+      await fetch(
+        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/api/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: user.email,
+            name: user.displayName,
+            photoURL: user.photoURL,
+            method: "google",
+          }),
+        }
+      );
 
-      const res = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-          method: "google",
-        }),
-      });
+      const res = await fetch(
+        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: user.email,
+            method: "google",
+          }),
+        }
+      );
 
       const data = await res.json();
       if (res.ok) {

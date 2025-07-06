@@ -24,9 +24,12 @@ const FeaturedArtifacts = () => {
       }
       const token = await user.getIdToken();
 
-      const res = await fetch("http://localhost:5000/artifacts/featured", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/featured",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (!res.ok) throw new Error("ফিচ করতে সমস্যা হয়েছে");
 
@@ -56,10 +59,13 @@ const FeaturedArtifacts = () => {
     try {
       const token = await user.getIdToken();
 
-      const res = await fetch(`http://localhost:5000/like/${artifactId}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${artifactId}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (!res.ok) {
         const errData = await res.json();
