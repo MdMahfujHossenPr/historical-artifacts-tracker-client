@@ -31,7 +31,7 @@ const Feedback = () => {
     try {
       setLoading(true);
 
-      // Simulate API call delay (replace with real API)
+      // Simulate API Call delay (replace with real API)
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       Swal.fire({
