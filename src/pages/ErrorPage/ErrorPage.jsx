@@ -30,7 +30,7 @@ const ErrorPage = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.6 }}
       >
-        We're sorry, but the page you requested could not be found. It might
+        We're Sorry, but the page you requested could not be found. It might
         have been removed, renamed, or did not exist in the first place.
       </motion.p>
 
