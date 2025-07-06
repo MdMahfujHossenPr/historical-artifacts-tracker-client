@@ -28,8 +28,8 @@ const AllArtifacts = () => {
         const data = await res.json();
         setArtifacts(data || []);
       } catch (err) {
-        console.error("আর্কাইভ লোড করতে সমস্যা:", err);
-        setError("আর্কাইভ লোড করতে সমস্যা হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।");
+        console.error("Failed to load artifacts:", err);
+        setError("Failed to load artifacts, please try again.");
       } finally {
         setLoading(false);
       }
@@ -40,7 +40,7 @@ const AllArtifacts = () => {
 
   const handleLike = async (artifactId) => {
     if (!user) {
-      alert("লাইক করতে হলে আপনাকে লগইন করতে হবে!");
+      alert("You must be logged in to like artifacts!");
       return;
     }
 
@@ -62,7 +62,7 @@ const AllArtifacts = () => {
         )
       );
     } catch {
-      alert("❌ লাইক/আনলাইক করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+      alert("❌ Failed to like/unlike. Please try again.");
     } finally {
       setLikingId(null);
     }
@@ -87,7 +87,7 @@ const AllArtifacts = () => {
       </motion.div>
 
       {loading && (
-        <p className="text-center text-black">সব আর্টিফ্যাক্ট লোড হচ্ছে...</p>
+        <p className="text-center text-black">Loading all artifacts...</p>
       )}
 
       {error && (
@@ -96,7 +96,7 @@ const AllArtifacts = () => {
 
       {!loading && !error && artifacts.length === 0 && (
         <p className="text-center text-yellow-600 font-medium">
-          কোনো আর্টিফ্যাক্ট পাওয়া যায়নি।
+          No artifacts found.
         </p>
       )}
 
@@ -135,8 +135,7 @@ const AllArtifacts = () => {
                         : "text-rose-600"
                     }`}
                     style={{
-                      pointerEvents:
-                        likingId === artifact._id ? "none" : "auto",
+                      pointerEvents: likingId === artifact._id ? "none" : "auto",
                     }}
                   />
                   <span
