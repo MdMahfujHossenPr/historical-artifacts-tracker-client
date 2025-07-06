@@ -73,7 +73,7 @@ const HelpAndSupport = () => {
         send us a message.
       </p>
 
-      {/* FAQ Section */}
+      {/* Faq Section */}
       <div className="mb-12 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-rose-50 p-6 rounded-xl shadow-sm border-2 border-white">
           <h3 className="font-semibold text-rose-700 mb-2">How do I reset my password?</h3>
