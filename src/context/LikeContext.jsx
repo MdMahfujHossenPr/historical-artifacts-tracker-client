@@ -1,12 +1,15 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useAuth } from "./AuthContext";
 
+// Create and export Like Context
 export const LikeContext = createContext();
 
+// LikeProvider manages liked artifacts state and provides like-related utilities
 export const LikeProvider = ({ children }) => {
-  const { user, getToken } = useAuth();
-  const [likedArtifacts, setLikedArtifacts] = useState([]);
+  const { user, getToken } = useAuth(); // Access current user and token from AuthContext
+  const [likedArtifacts, setLikedArtifacts] = useState([]); // Stores IDs of liked artifacts
 
+  // Fetch liked artifacts from server whenever user changes
   useEffect(() => {
     if (!user) {
       setLikedArtifacts([]);
@@ -25,10 +28,11 @@ export const LikeProvider = ({ children }) => {
         });
 
         if (!res.ok) throw new Error("Failed to fetch liked artifacts");
+
         const data = await res.json();
         setLikedArtifacts(data || []);
       } catch (error) {
-        console.error("Fetching liked artifacts failed", error);
+        console.error("Fetching liked artifacts failed:", error);
         setLikedArtifacts([]);
       }
     };
@@ -36,6 +40,12 @@ export const LikeProvider = ({ children }) => {
     fetchLikedArtifacts();
   }, [user, getToken]);
 
+  /**
+   * Like or unlike an artifact by its ID.
+   * Sends a POST request to the server and updates local state.
+   * @param {string} artifactId - ID of the artifact to like or unlike
+   * @returns {boolean} - Whether the artifact is now liked
+   */
   const likeArtifact = async (artifactId) => {
     if (!user) return false;
 
@@ -61,17 +71,23 @@ export const LikeProvider = ({ children }) => {
         );
         return result.liked;
       } else {
-        console.error(result.error);
+        console.error("Error from server:", result.error);
         return false;
       }
     } catch (error) {
-      console.error("Like request failed", error);
+      console.error("Like request failed:", error);
       return false;
     }
   };
 
+  /**
+   * Check if a specific artifact is liked by the user
+   * @param {string} artifactId - ID of the artifact
+   * @returns {boolean}
+   */
   const isLiked = (artifactId) => likedArtifacts.includes(artifactId);
 
+  // Provide context values to children components
   return (
     <LikeContext.Provider value={{ likedArtifacts, likeArtifact, isLiked }}>
       {children}
