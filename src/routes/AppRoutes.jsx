@@ -1,8 +1,10 @@
+// src/routes/AppRoutes.jsx
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import PrivateRoute from "./PrivateRoute";
 
-//Pages
+// Pages
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -12,6 +14,10 @@ import AllArtifacts from "../pages/AllArtifacts/AllArtifacts";
 import MyArtifacts from "../pages/MyArtifacts/MyArtifacts";
 import LikedArtifacts from "../pages/LikedArtifacts/LikedArtifacts";
 import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
+import HelpAndSupport from "../pages/HelpAndSupport/HelpAndSupport";
+import Feedback from "../pages/Feedback/Feedback";
+import MyProfile from "../pages/MyProfile/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-artifact",
-        element: <AddArtifact />,
+        element: (
+          <PrivateRoute>
+            <AddArtifact />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/all-artifacts",
@@ -33,7 +43,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-artifacts",
-        element: <MyArtifacts />, // Assuming you want to use AllArtifacts for MyArtifacts as
+        element: (
+          <PrivateRoute>
+            <MyArtifacts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/artifact/:id",
@@ -47,7 +61,7 @@ const router = createBrowserRouter([
         path: "/liked-artifacts",
         element: (
           <PrivateRoute>
-             <LikedArtifacts/>
+            <LikedArtifacts />
           </PrivateRoute>
         ),
       },
@@ -58,6 +72,30 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/my-profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update-profile",
+        element: (
+          <PrivateRoute>
+            <UpdateProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/feedback",
+        element: <Feedback />,
+      },
+      {
+        path: "/help",
+        element: <HelpAndSupport />,
       },
     ],
   },

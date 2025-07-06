@@ -70,6 +70,7 @@ const LikedArtifacts = () => {
 
   return (
     <section className="px-4 py-10 max-w-7xl mx-auto">
+      <title>liked-artifacts</title>
       <h1 className="text-3xl font-bold text-center mb-8 text-rose-800">
         ❤️ Liked Artifacts
       </h1>

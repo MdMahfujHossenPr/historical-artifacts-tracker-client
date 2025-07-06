@@ -1,14 +1,19 @@
-// PrivateRoute.jsx
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+// src/routes/PrivateRoute.jsx
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // adjust path if needed
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
+  const location = useLocation();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
   return children;
 };

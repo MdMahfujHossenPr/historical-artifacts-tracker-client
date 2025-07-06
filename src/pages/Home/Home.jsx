@@ -11,6 +11,7 @@ const Home = () => {
 
   return (
     <div className="bg-rose-100 space-y-16">
+      <title>home</title>
       <Banner />
       <FeaturedArtifacts />
       <ExtraSection1 />

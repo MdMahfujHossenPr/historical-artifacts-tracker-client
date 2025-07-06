@@ -143,6 +143,7 @@ const ArtifactDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-4">
+      <title>artifact-details</title>
       <div className="bg-rose-100 border-8 border-white shadow-lg rounded-xl overflow-hidden">
         <img
           src={artifact.image}

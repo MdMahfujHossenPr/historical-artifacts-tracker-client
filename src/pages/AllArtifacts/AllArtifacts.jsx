@@ -70,6 +70,7 @@ const AllArtifacts = () => {
 
   return (
     <section className="px-4 py-16 max-w-screen-xl mx-auto">
+      <title>all-artifacts</title>
       <motion.div
         className="flex justify-between items-center mb-10"
         initial={{ opacity: 0 }}

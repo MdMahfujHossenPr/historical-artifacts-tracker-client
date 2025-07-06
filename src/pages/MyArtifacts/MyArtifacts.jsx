@@ -112,6 +112,7 @@ const MyArtifacts = () => {
 
   return (
     <div className="p-6">
+      <title>my-artifacts</title>
       <h1 className="text-3xl font-bold mb-6 text-center">My Artifacts</h1>
 
       {artifacts.length === 0 ? (
