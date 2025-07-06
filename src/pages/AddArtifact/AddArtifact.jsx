@@ -200,7 +200,7 @@ const getSelectClass = (fieldName) =>
           <ErrorMessage message={validationErrors.name} />
         </div>
 
-        {/* Artifact Image URL */}
+        {/* Artifact Image URL Here */}
         <div>
           <label htmlFor="image" className="block font-semibold mb-1">
             Artifact Image URL
