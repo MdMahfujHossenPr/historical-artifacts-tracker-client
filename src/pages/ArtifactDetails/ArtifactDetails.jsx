@@ -86,7 +86,7 @@ const ArtifactDetails = () => {
     checkLiked();
   }, [id, userEmail, auth]);
 
-  // Like/unlike handler
+  // Like/Unlike handler
   const handleLike = async () => {
     const currentUser = auth.currentUser;
     if (!currentUser) {
