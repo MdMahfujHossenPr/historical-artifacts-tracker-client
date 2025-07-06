@@ -218,7 +218,7 @@ const getSelectClass = (fieldName) =>
           <ErrorMessage message={validationErrors.image} />
         </div>
 
-        {/* Artifact Type Dropdown */}
+        {/* Artifact Type Dropdown Here */}
         <div>
           <label htmlFor="type" className="block font-semibold mb-1">
             Artifact Type
