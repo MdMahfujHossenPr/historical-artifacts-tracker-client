@@ -1,25 +1,37 @@
+// Import necessary Firebase functions and modules
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
-  updateProfile as firebaseUpdateProfile
+  updateProfile as firebaseUpdateProfile,
 } from "firebase/auth";
 
+// Load Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyCH9bTXzJPUdNlH4YVUhT9gXMb7jDkfOxk",
-  authDomain: "historical-artifacts-tra-399c3.firebaseapp.com",
-  projectId: "historical-artifacts-tra-399c3",
-  storageBucket: "historical-artifacts-tra-399c3.firebasestorage.app",
-  messagingSenderId: "10837832117",
-  appId: "1:10837832117:web:aece38eeee2cbb5435a9fc"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Authentication
 const auth = getAuth(app);
+
+// Export Firebase app instance
 export default app;
+
+// Create Google Auth provider instance
 const googleProvider = new GoogleAuthProvider();
 
+/**
+ * Sign in the user using Google popup authentication
+ */
 const googleSignIn = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -31,6 +43,10 @@ const googleSignIn = async () => {
   }
 };
 
+/**
+ * Update the current user's profile
+ * @param {Object} profile - Object containing the updated profile information (e.g., { displayName, photoURL })
+ */
 const updateUserProfile = async (profile) => {
   if (auth.currentUser) {
     try {
@@ -44,4 +60,5 @@ const updateUserProfile = async (profile) => {
   }
 };
 
+// Export authentication utilities
 export { auth, googleProvider, googleSignIn, updateUserProfile };
