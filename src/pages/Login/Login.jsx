@@ -46,7 +46,7 @@ const Login = () => {
     }
   };
 
-  // Google Login (as before)
+  // Google Login (As before)
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
