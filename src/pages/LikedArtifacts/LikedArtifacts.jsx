@@ -54,7 +54,7 @@ const LikedArtifacts = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-10">⏳ Loading...</p>;
+  if (loading) return <p className="text-center mt-10"> Loading...</p>;
 
   if (error)
     return (
