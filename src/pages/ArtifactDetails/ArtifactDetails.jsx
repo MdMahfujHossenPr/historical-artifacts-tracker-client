@@ -43,7 +43,7 @@ const ArtifactDetails = () => {
         const token = await currentUser.getIdToken();
 
         const res = await axios.get(
-          `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/${id}`,
+          `https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -76,7 +76,7 @@ const ArtifactDetails = () => {
         const token = await currentUser.getIdToken();
 
         const res = await axios.get(
-          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/liked",
+          "https://historical-artifacts-tracker-server-lovat.vercel.app/liked",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -107,7 +107,7 @@ const ArtifactDetails = () => {
       const token = await currentUser.getIdToken();
 
       const response = await axios.post(
-        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${id}`,
+        `https://historical-artifacts-tracker-server-lovat.vercel.app/like/${id}`,
         null,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -134,7 +134,7 @@ const ArtifactDetails = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner text-primary"></span>
+        <span className="text-rose-900 loading loading-bars loading-lg"></span>
       </div>
     );
   }

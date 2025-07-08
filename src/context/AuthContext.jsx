@@ -18,22 +18,20 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const DEFAULT_PROFILE_PIC =
-    "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+  const DEFAULT_PROFILE_PIC = "https://i.ibb.co/2kRZ1Z5/default-avatar.png";
 
   const formatUser = (user) => ({
     uid: user.uid,
     email: user.email,
-    name: user.displayName || "User Name",
+    name: user.displayName || user.providerData?.[0]?.displayName || "User",
     profilePicture:
-      user.photoURL && user.photoURL !== "" ? user.photoURL : DEFAULT_PROFILE_PIC,
+      user.photoURL || user.providerData?.[0]?.photoURL || DEFAULT_PROFILE_PIC,
   });
 
   useEffect(() => {
     const syncUser = () => {
       const localUser = localStorage.getItem("user");
-      if (localUser) setUser(JSON.parse(localUser));
-      else setUser(null);
+      setUser(localUser ? JSON.parse(localUser) : null);
     };
 
     window.addEventListener("storage", syncUser);
@@ -67,12 +65,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    if (!email || !password) {
-      toast.error("❌ Please provide email and password");
-      return;
-    }
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
+      await res.user.reload();
       const formatted = formatUser(res.user);
       setUser(formatted);
       localStorage.setItem("user", JSON.stringify(formatted));
@@ -85,18 +80,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (email, password, name = null, photoURL = null) => {
-    if (!email || !password) {
-      toast.error("❌ Please provide email and password");
-      return;
-    }
+  const signup = async (email, password, name, photoURL) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
       if (name || photoURL) {
         await updateProfile(res.user, {
-          ...(name ? { displayName: name } : {}),
-          ...(photoURL ? { photoURL } : {}),
+          displayName: name,
+          photoURL: photoURL || DEFAULT_PROFILE_PIC,
         });
         await res.user.reload();
       }
@@ -116,6 +107,7 @@ export const AuthProvider = ({ children }) => {
   const googleLogin = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
+      await res.user.reload(); // 🔄
       const formatted = formatUser(res.user);
       setUser(formatted);
       localStorage.setItem("user", JSON.stringify(formatted));
@@ -142,10 +134,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUserProfile = async ({ name, photoURL }) => {
-    if (!auth.currentUser) {
-      toast.error("❌ User not logged in");
-      return;
-    }
     try {
       await updateProfile(auth.currentUser, {
         ...(name ? { displayName: name } : {}),

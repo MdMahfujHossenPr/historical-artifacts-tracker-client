@@ -22,7 +22,7 @@ const LikedArtifacts = () => {
         if (!token) throw new Error("User not authenticated");
 
         const res = await fetch(
-          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/liked",
+          "https://historical-artifacts-tracker-server-lovat.vercel.app/liked",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const LikedArtifacts = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-10"> Loading...</p>;
+  if (loading) return <p className="text-center mt-10"><span className="text-rose-900 loading loading-bars loading-lg"></span></p>;
 
   if (error)
     return (

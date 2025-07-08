@@ -25,7 +25,7 @@ const FeaturedArtifacts = () => {
       const token = await user.getIdToken();
 
       const res = await fetch(
-        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/featured",
+        "https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts/featured",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -60,7 +60,7 @@ const FeaturedArtifacts = () => {
       const token = await user.getIdToken();
 
       const res = await fetch(
-        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${artifactId}`,
+        `https://historical-artifacts-tracker-server-lovat.vercel.app/like/${artifactId}`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -109,7 +109,7 @@ const FeaturedArtifacts = () => {
 
       {loading && (
         <p className="text-center text-black">
-          Featured artifacts লোড হচ্ছে...
+          Featured artifacts <span className="text-rose-900 loading loading-bars loading-lg"></span>
         </p>
       )}
 
@@ -119,7 +119,8 @@ const FeaturedArtifacts = () => {
 
       {!loading && !error && artifacts.length === 0 && (
         <p className="text-center text-yellow-600 font-medium">
-          কোনো Featured artifacts পাওয়া যায়নি।
+            Featured artifacts are available only after login. Please log in to view them.
+            <span className="text-rose-900 loading loading-bars loading-lg"></span>
         </p>
       )}
 

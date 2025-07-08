@@ -34,7 +34,7 @@ const ArtifactCard = ({ artifact }) => {
 
     try {
       const res = await axios.post(
-        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${_id}`,
+        `https://historical-artifacts-tracker-server-lovat.vercel.app/like/${_id}`,
         null,
         {
           headers: { Authorization: `Bearer ${token}` },

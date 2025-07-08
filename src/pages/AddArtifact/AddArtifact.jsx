@@ -112,7 +112,7 @@ const AddArtifact = () => {
       }
 
       const response = await axios.post(
-        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts`,
+        `https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts`,
         artifactData,
         {
           headers: {

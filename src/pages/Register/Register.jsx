@@ -29,7 +29,7 @@ const Register = () => {
   const sendUserToBackend = async (user, method, password = "") => {
     try {
       const res = await fetch(
-        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/api/users",
+        "https://historical-artifacts-tracker-server-lovat.vercel.app/api/users",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

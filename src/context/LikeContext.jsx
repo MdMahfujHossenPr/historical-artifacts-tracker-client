@@ -22,7 +22,7 @@ export const LikeProvider = ({ children }) => {
         if (!token) return;
 
         const res = await fetch(
-          "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/liked",
+          "https://historical-artifacts-tracker-server-lovat.vercel.app/liked",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ export const LikeProvider = ({ children }) => {
       if (!token) return false;
 
       const res = await fetch(
-        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/like/${artifactId}`,
+        `https://historical-artifacts-tracker-server-lovat.vercel.app/like/${artifactId}`,
         {
           method: "POST",
           headers: {

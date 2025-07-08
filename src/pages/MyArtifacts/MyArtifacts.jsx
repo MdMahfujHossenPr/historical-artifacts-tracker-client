@@ -25,7 +25,7 @@ const MyArtifacts = () => {
         }
         const token = await auth.currentUser.getIdToken();
         const res = await axios.get(
-          `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/my-artifacts`,
+          `https://historical-artifacts-tracker-server-lovat.vercel.app/my-artifacts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ const MyArtifacts = () => {
       try {
         const token = await auth.currentUser.getIdToken();
         await axios.delete(
-          `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/${id}`,
+          `https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ const MyArtifacts = () => {
     try {
       const token = await auth.currentUser.getIdToken();
       await axios.put(
-        `https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/artifacts/${_id}`,
+        `https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts/${_id}`,
         updatedData,
         {
           headers: {
@@ -116,7 +116,7 @@ const MyArtifacts = () => {
 
   if (loading) {
     return (
-      <p className="text-center mt-10 text-lg font-semibold">Loading...</p>
+      <p className="text-center mt-10 text-lg font-semibold"><span className="text-rose-900 loading loading-bars loading-lg"></span></p>
     );
   }
 
@@ -191,16 +191,16 @@ const MyArtifacts = () => {
 
       {/* Update Modal */}
       {editingArtifact && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-          <div className="bg-white rounded p-6 w-full max-w-xl shadow-lg relative">
-            <h2 className="text-2xl font-bold mb-4">Update Artifact</h2>
-            <form onSubmit={handleUpdate} className="space-y-4">
+        <div className="fixed inset-0 bg-rose-100  bg-opacity-40 flex justify-center items-center z-50">
+          <div className="bg-rose-500 border-8 border-white rounded p-6 w-full max-w-xl shadow-lg relative">
+            <h2 className="text-2xl font-bold text-gray-200 mb-4">Update Artifact</h2>
+            <form onSubmit={handleUpdate} className="space-y-4 text-white font-bold">
               <input
                 type="text"
                 name="name"
                 value={formData.name || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Artifact Name"
                 required
               />
@@ -209,7 +209,7 @@ const MyArtifacts = () => {
                 name="image"
                 value={formData.image || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Image URL"
                 required
               />
@@ -218,7 +218,7 @@ const MyArtifacts = () => {
                 name="type"
                 value={formData.type || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Artifact Type"
               />
               <input
@@ -226,7 +226,7 @@ const MyArtifacts = () => {
                 name="createdAt"
                 value={formData.createdAt || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Created At (e.g., 100 BC)"
               />
               <input
@@ -234,7 +234,7 @@ const MyArtifacts = () => {
                 name="discoveredAt"
                 value={formData.discoveredAt || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Discovered At"
               />
               <input
@@ -242,7 +242,7 @@ const MyArtifacts = () => {
                 name="discoveredBy"
                 value={formData.discoveredBy || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Discovered By"
               />
               <input
@@ -250,14 +250,14 @@ const MyArtifacts = () => {
                 name="presentLocation"
                 value={formData.presentLocation || ""}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-rose-300 border-2 border-white"
                 placeholder="Present Location"
               />
               <textarea
                 name="historicalContext"
                 value={formData.historicalContext || ""}
                 onChange={handleChange}
-                className="textarea textarea-bordered w-full"
+                className="textarea textarea-bordered bg-rose-300 border-2 border-white w-full"
                 placeholder="Historical Context"
                 required
               />
@@ -265,11 +265,11 @@ const MyArtifacts = () => {
                 name="description"
                 value={formData.description || ""}
                 onChange={handleChange}
-                className="textarea textarea-bordered w-full"
+                className="textarea textarea-bordered bg-rose-300 border-2 border-white w-full"
                 placeholder="Short Description"
                 required
               />
-              <button type="submit" className="btn btn-primary w-full">
+              <button type="submit" className="btn bg-red-500 border-4 border-white text-white font-extrabold w-full">
                 Update
               </button>
             </form>

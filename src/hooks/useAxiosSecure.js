@@ -4,7 +4,7 @@ import { getToken } from "../utils/token"; // আপনার token.js ফাই
 
 const useAxiosSecure = () => {
   const instance = axios.create({
-    baseURL: "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app",
+    baseURL: "https://historical-artifacts-tracker-server-lovat.vercel.app",
   });
 
   // Request interceptor to add authorization token

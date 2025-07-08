@@ -37,7 +37,7 @@ const Navbar = () => {
     navLinks.push({ to: "/add-artifact", label: "Add Artifact" });
   }
 
-  const userPhoto = user?.profilePicture || user?.photoURL || null;
+  const userPhoto = user?.profilePicture;
   const userName = user?.name || user?.displayName || "User";
 
   return (

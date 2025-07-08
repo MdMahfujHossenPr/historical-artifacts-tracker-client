@@ -54,7 +54,7 @@ const Login = () => {
       const user = result.user;
 
       await fetch(
-        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/api/users",
+        "https://historical-artifacts-tracker-server-lovat.vercel.app/api/users",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -68,7 +68,7 @@ const Login = () => {
       );
 
       const res = await fetch(
-        "https://historical-artifacts-tracker-server-apkyn6s0q.vercel.app/login",
+        "https://historical-artifacts-tracker-server-lovat.vercel.app/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
