@@ -11,7 +11,6 @@ const AllArtifacts = () => {
   const [likingId, setLikingId] = useState(null);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [comments, setComments] = useState({}); // { artifactId: [comment1, comment2, ...] }
 
   const { user, getToken } = useAuth();
   const { likeArtifact, isLiked } = useContext(LikeContext);
@@ -24,7 +23,6 @@ const AllArtifacts = () => {
 
       try {
         const token = await getToken();
-        // সার্চ query যুক্ত করলাম
         let url = "https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts";
         if (searchTerm.trim()) {
           url = `https://historical-artifacts-tracker-server-lovat.vercel.app/search?name=${encodeURIComponent(
@@ -79,26 +77,6 @@ const AllArtifacts = () => {
       setLikingId(null);
     }
   };
-
-  // Comment যোগ করার হ্যান্ডলার
-  const handleAddComment = (artifactId, commentText) => {
-    if (!user) {
-      alert("Please login to comment");
-      return;
-    }
-    if (!commentText.trim()) return;
-
-    setComments((prev) => {
-      const artifactComments = prev[artifactId] || [];
-      return {
-        ...prev,
-        [artifactId]: [...artifactComments, { text: commentText.trim(), user: user.name || "Anonymous" }],
-      };
-    });
-  };
-
-  // Comment input state আলাদা রাখতে এটা তৈরি
-  const [commentInputs, setCommentInputs] = useState({});
 
   return (
     <section className="px-4 py-16 max-w-screen-xl mx-auto">
@@ -194,64 +172,10 @@ const AllArtifacts = () => {
 
                 <button
                   onClick={() => navigate(`/artifact/${artifact._id}`)}
-                  className="w-full bg-rose-500 hover:bg-rose-600 text-white py-2 rounded-lg mb-4"
+                  className="w-full bg-rose-500 hover:bg-rose-600 text-white py-2 rounded-lg"
                 >
                   View Details
                 </button>
-
-                {/* Comments Section */}
-                <div className="bg-white/20 rounded-md p-3 max-h-48 overflow-y-auto">
-                  <h4 className="font-semibold text-black mb-2">Comments:</h4>
-                  {(comments[artifact._id]?.length > 0) ? (
-                    <ul className="mb-3 max-h-32 overflow-y-auto space-y-2">
-                      {comments[artifact._id].map((c, idx) => (
-                        <li
-                          key={idx}
-                          className="bg-white/40 rounded-md p-2 text-black"
-                        >
-                          <strong>{c.user}:</strong> {c.text}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-black text-sm mb-3">No comments yet.</p>
-                  )}
-
-                  {/* Add comment input */}
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleAddComment(
-                        artifact._id,
-                        commentInputs[artifact._id] || ""
-                      );
-                      setCommentInputs((prev) => ({
-                        ...prev,
-                        [artifact._id]: "",
-                      }));
-                    }}
-                    className="flex gap-2"
-                  >
-                    <input
-                      type="text"
-                      placeholder="Add a comment..."
-                      className="flex-grow rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-600"
-                      value={commentInputs[artifact._id] || ""}
-                      onChange={(e) =>
-                        setCommentInputs((prev) => ({
-                          ...prev,
-                          [artifact._id]: e.target.value,
-                        }))
-                      }
-                    />
-                    <button
-                      type="submit"
-                      className="bg-rose-600 hover:bg-rose-700 text-white px-4 rounded-md"
-                    >
-                      Post
-                    </button>
-                  </form>
-                </div>
               </div>
             </motion.div>
           ))}
