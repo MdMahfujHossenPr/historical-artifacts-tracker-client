@@ -6,12 +6,12 @@ A full-stack web application to explore, track, like, and manage ancient histori
 
 ## 🌐 Live Website
 
-🔗 [Live Site](https://your-live-site-link.web.app)
+🔗 [Live Site](https://artifact-tracker.netlify.app/liked-artifacts)
 
 ## 💻 GitHub Repositories
 
-- 🔗 [Client Side Repository](https://github.com/your-username/historical-artifacts-tracker-client)
-- 🔗 [Server Side Repository](https://github.com/your-username/historical-artifacts-tracker-server)
+- 🔗 [Client Side Repository](https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-MdMahfujHossenPr)
+- 🔗 [Server Side Repository](https://github.com/Programming-Hero-Web-Course4/b11a10-server-side-MdMahfujHossenPr)
 
 ---
 
