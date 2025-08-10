@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
+ 
+
 
 .btn {
   @apply rounded-full flex items-center justify-center cursor-pointer select-none;

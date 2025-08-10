@@ -28,11 +28,13 @@ const Navbar = () => {
     navigate("/");
   };
 
+  // Base nav links for all users
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/all-artifacts", label: "All Artifacts" },
   ];
 
+  // Add route for logged in users
   if (user) {
     navLinks.push({ to: "/add-artifact", label: "Add Artifact" });
   }
@@ -41,11 +43,8 @@ const Navbar = () => {
   const userName = user?.name || user?.displayName || "User";
 
   return (
-    <nav
-      className="fixed w-full left-0 z-50 bg-rose-300 text-white shadow-lg"
-      style={{ margin: "0 auto", left: "50%", transform: "translateX(-50%)" }}
-    >
-      <div className="flex justify-between h-16 items-center px-4 md:px-8">
+    <nav className="fixed w-full top-0 left-0 z-50 bg-rose-300 text-white shadow-lg">
+      <div className="max-w-7xl mx-auto flex justify-between items-center h-16 px-4 md:px-8">
         {/* Logo */}
         <Link
           to="/"
@@ -226,6 +225,20 @@ const Navbar = () => {
                   className="block py-3 px-5 rounded-lg hover:bg-white/10 transition"
                 >
                   Update Profile
+                </NavLink>
+                <NavLink
+                  to="/my-artifacts"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-3 px-5 rounded-lg hover:bg-white/10 transition"
+                >
+                  My Artifacts
+                </NavLink>
+                <NavLink
+                  to="/liked-artifacts"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-3 px-5 rounded-lg hover:bg-white/10 transition"
+                >
+                  Liked Artifacts
                 </NavLink>
                 <NavLink
                   to="/feedback"
