@@ -4,7 +4,7 @@ import ExtraSection1 from "./ExtraSection1";
 import ExtraSection2 from "./ExtraSection2";
 import AnimatedSection from "./AnimatedSection";
 import Testimonials from "./Testimonials";     
-import StatsSection from "./StatsSection";     
+import StatsSection from "./StatsSection"; //new    
         
 const Home = () => {
   return (
