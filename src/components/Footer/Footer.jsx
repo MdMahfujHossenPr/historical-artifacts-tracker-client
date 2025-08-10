@@ -15,12 +15,15 @@ const Footer = () => {
         <div className="col-span-1 flex flex-col items-center">
           <Link to="/">
             <img
-              src="/logo.png" // তোমার Navbar এর logo এর পাথ
+              src="/logo.png" // Navbar এর logo এর পাথ
               alt="Artifact Tracker Logo"
-              className="w-16 h-16 object-contain"
+              className="w-16 h-16 object-contain rounded-full shadow-md bg-black"
             />
-          </Link> <br />
-           <h2 className="text-xl font-bold text-white mb-4">Artifact Tracker</h2>
+          </Link>
+          <br />
+          <h2 className="text-xl font-bold text-white mb-4">
+            Artifact Tracker
+          </h2>
         </div>
 
         {/* Main Content Sections - About, Quick Links, Contact */}
@@ -39,7 +42,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -86,7 +91,9 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Contact Us
+            </h3>
             <p>Email: support@artifacttracker.com</p>
             <p>Phone: +880 1234 567890</p>
             <p>Address: 123 Heritage St, Dhaka, Bangladesh</p>

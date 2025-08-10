@@ -5,6 +5,8 @@ import { FaThumbsUp, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { LikeContext } from "../../context/LikeContext";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
+import Testimonials from "../Home/Testimonials";
+
 
 /**
  * AllArtifacts page
@@ -78,7 +80,6 @@ const AllArtifacts = () => {
       setLoading(true);
       setError(null);
       try {
-        // If you want to use search on backend, you could call /search?name=debouncedTerm
         const token = await getToken();
         const res = await fetch(
           "https://historical-artifacts-tracker-server-lovat.vercel.app/artifacts",
@@ -91,7 +92,6 @@ const AllArtifacts = () => {
         if (!res.ok) throw new Error("Failed to fetch artifacts");
         const data = await res.json();
         if (!cancelled) {
-          // ensure array
           setArtifacts(Array.isArray(data) ? data : []);
         }
       } catch (err) {
@@ -112,7 +112,6 @@ const AllArtifacts = () => {
   const processed = useMemo(() => {
     let list = Array.isArray(artifacts) ? [...artifacts] : [];
 
-    // search (client-side)
     if (debouncedTerm) {
       const q = debouncedTerm.toLowerCase();
       list = list.filter(
@@ -122,12 +121,10 @@ const AllArtifacts = () => {
       );
     }
 
-    // filter type
     if (selectedType !== "all") {
       list = list.filter((a) => (a.type || "").toLowerCase() === selectedType.toLowerCase());
     }
 
-    // sort
     switch (sortBy) {
       case "most-liked":
         list.sort((a, b) => (b.likes || 0) - (a.likes || 0));
@@ -136,7 +133,7 @@ const AllArtifacts = () => {
         list.sort((a, b) => (a.likes || 0) - (b.likes || 0));
         break;
       case "newest":
-        list.sort((a, b) => new Date(b.createdAt || b.createdAt || 0) - new Date(a.createdAt || a.createdAt || 0));
+        list.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
         break;
       case "oldest":
         list.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
@@ -154,13 +151,13 @@ const AllArtifacts = () => {
     return list;
   }, [artifacts, debouncedTerm, selectedType, sortBy]);
 
-  // Pagination: compute displayed slice whenever processed, pageSize or page changes
+  // Reset page when dependencies change
   useEffect(() => {
-    setCurrentPage(1); // reset page if processed list changed significantly
+    setCurrentPage(1);
   }, [debouncedTerm, selectedType, sortBy, pageSize]);
 
+  // Update displayed slice on processed or pagination changes
   useEffect(() => {
-    const total = processed.length;
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
     setDisplayed(processed.slice(start, end));
@@ -195,214 +192,230 @@ const AllArtifacts = () => {
   };
 
   return (
-    <section className="px-4 py-16 max-w-7xl mx-auto">
-      <title>All Artifacts</title>
+    <>
+      <section className="px-4 py-16 max-w-7xl mx-auto">
+        <title>All Artifacts</title>
 
-      {/* Header / Controls */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-        <h1 className="text-3xl font-extrabold text-rose-700">All Artifacts</h1>
+        {/* Header / Controls */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+          <h1 className="text-3xl font-extrabold text-rose-700">All Artifacts</h1>
 
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full md:w-auto">
-          <label className="sr-only" htmlFor="search">Search artifacts</label>
-          <input
-            id="search"
-            type="search"
-            inputMode="search"
-            placeholder="Search by name or description..."
-            className="border border-gray-300 rounded-lg px-3 py-2 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-rose-400"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            aria-label="Search artifacts"
-          />
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full md:w-auto">
+            <label className="sr-only" htmlFor="search">
+              Search artifacts
+            </label>
+            <input
+              id="search"
+              type="search"
+              inputMode="search"
+              placeholder="Search by name or description..."
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Search artifacts"
+            />
 
-          <select
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            aria-label="Filter by type"
-          >
-            {types.map((t) => (
-              <option key={t} value={t}>
-                {t === "all" ? "All Types" : t}
-              </option>
-            ))}
-          </select>
+            <select
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              aria-label="Filter by type"
+            >
+              {types.map((t) => (
+                <option key={t} value={t}>
+                  {t === "all" ? "All Types" : t}
+                </option>
+              ))}
+            </select>
 
-          <select
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            aria-label="Sort artifacts"
-          >
-            <option value="most-liked">Most Liked</option>
-            <option value="least-liked">Least Liked</option>
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            <option value="name-asc">Name A → Z</option>
-            <option value="name-desc">Name Z → A</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Controls row 2: page size and stats */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <div className="text-sm text-gray-600">
-          Showing <span className="font-semibold text-rose-700">{processed.length}</span> results
+            <select
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              aria-label="Sort artifacts"
+            >
+              <option value="most-liked">Most Liked</option>
+              <option value="least-liked">Least Liked</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="name-asc">Name A → Z</option>
+              <option value="name-desc">Name Z → A</option>
+            </select>
+          </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <label className="text-sm text-gray-600">Per page:</label>
-          <select
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-            aria-label="Results per page"
-          >
-            {PAGE_SIZES.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* List / Grid */}
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {Array.from({ length: pageSize }).map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      ) : error ? (
-        <div className="text-center text-red-600 font-medium">{error}</div>
-      ) : processed.length === 0 ? (
-        <div className="text-center text-yellow-600 font-medium">No artifacts found.</div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {displayed.map((artifact, i) => (
-              <motion.article
-                key={artifact._id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06 }}
-                tabIndex={0}
-                aria-label={`Artifact ${artifact.name}`}
-              >
-                <div className="relative h-48 w-full overflow-hidden">
-                  <img
-                    src={artifact.image || "https://via.placeholder.com/600x400?text=No+Image"}
-                    alt={artifact.name}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    style={{ aspectRatio: "16/10" }}
-                  />
-                </div>
-
-                <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-xl font-semibold text-rose-700 mb-1 line-clamp-2">
-                    {artifact.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
-                    {artifact.shortDescription || artifact.description || "No description available."}
-                  </p>
-
-                  <div className="mt-auto flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleLike(artifact._id);
-                        }}
-                        disabled={likingId === artifact._id}
-                        aria-label={isLiked(artifact._id) ? "Unlike" : "Like"}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold transition 
-                          ${likingId === artifact._id ? "bg-rose-100 text-rose-700" : isLiked(artifact._id) ? "bg-green-600 text-white" : "bg-rose-600 text-white"}
-                        `}
-                        title={isLiked(artifact._id) ? "Unlike" : "Like"}
-                      >
-                        <FaThumbsUp />
-                      </button>
-
-                      {/* like count shown above button as requested? We keep count next to icon for clarity */}
-                      <div className="text-sm text-gray-700 select-none">
-                        <div className="text-xs text-gray-400">Likes</div>
-                        <div className="font-semibold text-rose-700">{artifact.likes || 0}</div>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => navigate(`/artifact/${artifact._id}`)}
-                      className="px-4 py-2 text-sm font-medium text-rose-700 border border-rose-700 rounded-lg hover:bg-rose-50 transition"
-                      aria-label={`View details of ${artifact.name}`}
-                    >
-                      See more
-                    </button>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
+        {/* Controls row 2: page size and stats */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div className="text-sm text-gray-600">
+            Showing <span className="font-semibold text-rose-700">{processed.length}</span> results
           </div>
 
-          {/* Pagination controls */}
-          <div className="mt-8 flex items-center justify-between">
-            <div className="text-sm text-gray-600">
-              Page <span className="font-semibold text-rose-700">{currentPage}</span> of{" "}
-              <span className="font-semibold text-rose-700">{totalPages}</span>
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-600">Per page:</label>
+            <select
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+              aria-label="Results per page"
+            >
+              {PAGE_SIZES.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* List / Grid */}
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {Array.from({ length: pageSize }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-600 font-medium">{error}</div>
+        ) : processed.length === 0 ? (
+          <div className="text-center text-yellow-600 font-medium">No artifacts found.</div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {displayed.map((artifact, i) => (
+                <motion.article
+                  key={artifact._id}
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  tabIndex={0}
+                  aria-label={`Artifact ${artifact.name}`}
+                >
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <img
+                      src={artifact.image || "https://via.placeholder.com/600x400?text=No+Image"}
+                      alt={artifact.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      style={{ aspectRatio: "16/10" }}
+                    />
+                  </div>
+
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="text-xl font-semibold text-rose-700 mb-1 line-clamp-2">
+                      {artifact.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                      {artifact.shortDescription || artifact.description || "No description available."}
+                    </p>
+
+                    <div className="mt-auto flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleLike(artifact._id);
+                          }}
+                          disabled={likingId === artifact._id}
+                          aria-label={isLiked(artifact._id) ? "Unlike" : "Like"}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold transition 
+                            ${
+                              likingId === artifact._id
+                                ? "bg-rose-100 text-rose-700"
+                                : isLiked(artifact._id)
+                                ? "bg-green-600 text-white"
+                                : "bg-rose-600 text-white"
+                            }
+                          `}
+                          title={isLiked(artifact._id) ? "Unlike" : "Like"}
+                        >
+                          <FaThumbsUp />
+                        </button>
+
+                        <div className="text-sm text-gray-700 select-none">
+                          <div className="text-xs text-gray-400">Likes</div>
+                          <div className="font-semibold text-rose-700">{artifact.likes || 0}</div>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => navigate(`/artifact/${artifact._id}`)}
+                        className="px-4 py-2 text-sm font-medium text-rose-700 border border-rose-700 rounded-lg hover:bg-rose-50 transition"
+                        aria-label={`View details of ${artifact.name}`}
+                      >
+                        See more
+                      </button>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="p-2 rounded-md bg-white border border-gray-200 shadow-sm disabled:opacity-50"
-                aria-label="Previous page"
-              >
-                <FaChevronLeft />
-              </button>
-
-              <div className="flex items-center gap-1">
-                {/* show up to 5 page buttons centered around current page */}
-                {(() => {
-                  const pages = [];
-                  const maxButtons = 5;
-                  let start = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-                  let end = start + maxButtons - 1;
-                  if (end > totalPages) {
-                    end = totalPages;
-                    start = Math.max(1, end - maxButtons + 1);
-                  }
-                  for (let p = start; p <= end; p++) {
-                    pages.push(
-                      <button
-                        key={p}
-                        onClick={() => setCurrentPage(p)}
-                        className={`px-3 py-1 rounded-md ${p === currentPage ? "bg-rose-600 text-white" : "bg-white border border-gray-200"}`}
-                        aria-current={p === currentPage ? "page" : undefined}
-                      >
-                        {p}
-                      </button>
-                    );
-                  }
-                  return pages;
-                })()}
+            {/* Pagination controls */}
+            <div className="mt-8 flex items-center justify-between">
+              <div className="text-sm text-gray-600">
+                Page <span className="font-semibold text-rose-700">{currentPage}</span> of{" "}
+                <span className="font-semibold text-rose-700">{totalPages}</span>
               </div>
 
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="p-2 rounded-md bg-white border border-gray-200 shadow-sm disabled:opacity-50"
-                aria-label="Next page"
-              >
-                <FaChevronRight />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded-md bg-white border border-gray-200 shadow-sm disabled:opacity-50"
+                  aria-label="Previous page"
+                >
+                  <FaChevronLeft />
+                </button>
+
+                <div className="flex items-center gap-1">
+                  {(() => {
+                    const pages = [];
+                    const maxButtons = 5;
+                    let start = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+                    let end = start + maxButtons - 1;
+                    if (end > totalPages) {
+                      end = totalPages;
+                      start = Math.max(1, end - maxButtons + 1);
+                    }
+                    for (let p = start; p <= end; p++) {
+                      pages.push(
+                        <button
+                          key={p}
+                          onClick={() => setCurrentPage(p)}
+                          className={`px-3 py-1 rounded-md ${
+                            p === currentPage
+                              ? "bg-rose-600 text-white"
+                              : "bg-white border border-gray-200"
+                          }`}
+                          aria-current={p === currentPage ? "page" : undefined}
+                        >
+                          {p}
+                        </button>
+                      );
+                    }
+                    return pages;
+                  })()}
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded-md bg-white border border-gray-200 shadow-sm disabled:opacity-50"
+                  aria-label="Next page"
+                >
+                  <FaChevronRight />
+                </button>
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </section>
+          </>
+        )}
+      </section>
+
+      <section className="px-4 py-16 max-w-7xl mx-auto bg-rose-50 rounded-lg mt-16">
+        <Testimonials />
+      </section>
+    </>
   );
 };
 
