@@ -30,7 +30,7 @@ const values = [
 const ExtraSection2 = () => {
   return (
     <section className="py-16 relative overflow-hidden text-white">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="px-4">
         <SectionTitle
           heading="🌍 Become a History Maker"
           subheading="Why your contribution matters"

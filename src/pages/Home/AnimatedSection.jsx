@@ -33,7 +33,7 @@ const items = [
 const AnimatedSection = () => {
   return (
     <section className="py-16 text-white overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="px-4">
         <SectionTitle
           heading="✨ Your Role in History"
           subheading="How your contribution shapes tomorrow"

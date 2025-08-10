@@ -1,17 +1,18 @@
-import React from "react";
 import Banner from "./Banner";
 import FeaturedArtifacts from "./FeaturedArtifacts";
 import ExtraSection1 from "./ExtraSection1";
 import ExtraSection2 from "./ExtraSection2";
 import AnimatedSection from "./AnimatedSection";
-
+import Testimonials from "./Testimonials";     
+import StatsSection from "./StatsSection";     
+        
 const Home = () => {
- <title>Home</title>
-
   return (
-    <div className="bg-rose-100 space-y-16">
+    <div className="bg-rose-50 space-y-16">
       <Banner />
+      <StatsSection />
       <FeaturedArtifacts />
+      <Testimonials />
       <ExtraSection1 />
       <ExtraSection2 />
       <AnimatedSection />
